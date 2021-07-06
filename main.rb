@@ -6,7 +6,7 @@ require 'openssl'
 
 word_def = []
 
-CSV.foreach("word_list_small.csv") do |row|
+CSV.foreach("word_list.csv") do |row|
   word = row[0]
   url = URI("https://wordsapiv1.p.rapidapi.com/words/#{word}/definitions")
   http = Net::HTTP.new(url.host, url.port)
@@ -24,9 +24,10 @@ CSV.foreach("word_list_small.csv") do |row|
   word_def << {word: word, def: definitions}
 end
 
-p word_def
-
-CSV.open("word_def_list.csv", "wb") do |csv|
-
+CSV.open('word_def_list.csv', 'wb') do |csv|
+  csv << ['word', 'def']
+  word_def.each do |elm|
+    csv << [elm[:word], elm[:def]]
+  end
 end
 
