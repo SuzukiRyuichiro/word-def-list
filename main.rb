@@ -20,10 +20,13 @@ CSV.foreach("word_list_small.csv") do |row|
   response = http.request(request)
   body = response.read_body
   json = JSON.parse(body)
-  definitions = json["definitions"].map { |elm| elm['definition'] }
-  definitions.join('; ')
+  definitions = json["definitions"].map { |elm| elm['definition'] }.join('; ')
+  word_def << {word: word, def: definitions}
 end
 
+p word_def
+
 CSV.open("word_def_list.csv", "wb") do |csv|
+
 end
 
